@@ -1,9 +1,11 @@
 import 'dart:math' show Random;
 
 import 'package:flutter/material.dart';
-import 'package:todo_app/entities/category_entity.dart';
 
 import 'package:todo_app/models/local_category_model.dart';
+import 'package:todo_app/models/local_task_model.dart';
+import 'package:todo_app/widgets/category_tag.dart';
+import 'package:todo_app/widgets/task_list_item.dart';
 
 import 'package:uuid/uuid.dart';
 
@@ -23,32 +25,16 @@ class MainApp extends StatelessWidget {
         body: SingleChildScrollView(
           child: Center(
             child: Column(
+              spacing: 12,
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
               // crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text('Hello World!'),
-                ListTile(
-                  onTap: () {},
-                  title: Text('Tile title'),
-                  leading: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    spacing: 4,
-                    children: [
-                      ColoredBox(
-                        color: Colors.amber,
-                        child: SizedBox(width: 4, height: 24),
-                      ),
-                      Icon(Icons.check_circle, color: Colors.green),
-                    ],
-                  ),
-                ),
-                CategoryTag(category: createRandomCategory()),
-                CategoryTag(category: createRandomCategory()),
-                CategoryTag(category: createRandomCategory()),
-                CategoryTag(category: createRandomCategory()),
-                CategoryTag(category: createRandomCategory()),
-                CategoryTag(category: createRandomCategory()),
+                TaskListItem(task: createRandomTask()),
+                TaskListItem(task: createRandomTask()),
+                TaskListItem(task: createRandomTask()),
+                TaskListItem(task: createRandomTask()),
                 CategoryTag(category: createRandomCategory()),
                 CategoryTag(category: createRandomCategory()),
                 CategoryTag(category: createRandomCategory()),
@@ -61,32 +47,15 @@ class MainApp extends StatelessWidget {
   }
 }
 
-class CategoryTag extends StatelessWidget {
-  const CategoryTag({super.key, required this.category});
-  final CategoryEntity category;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Color.fromARGB(255, 249, 250, 251),
-        border: Border.all(color: Color.fromARGB(255, 229, 231, 235)),
-        borderRadius: BorderRadius.circular(4),
-      ),
-      padding: EdgeInsets.all(4),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        spacing: 8,
-        children: [
-          ColoredBox(
-            color: category.color,
-            child: SizedBox(width: 4, height: 24),
-          ),
-          Text(category.name),
-        ],
-      ),
-    );
-  }
+LocalTaskModel createRandomTask() {
+  late final LocalTaskModel result;
+  result = LocalTaskModel(
+    title: Uuid().v4(),
+    deadline: DateTime.now(),
+    category: createRandomCategory(),
+    isDone: Random().nextBool(),
+  );
+  return result;
 }
 
 LocalCategoryModel createRandomCategory() {
