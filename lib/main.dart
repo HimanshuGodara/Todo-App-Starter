@@ -21,7 +21,6 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Center(
             child: Column(

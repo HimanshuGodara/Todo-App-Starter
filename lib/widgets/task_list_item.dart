@@ -20,30 +20,47 @@ class _TaskListItemState extends State<TaskListItem> {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      onTap: () {},
-      title: Text(currentTask.title),
-      leading: Row(
-        mainAxisSize: MainAxisSize.min,
-        spacing: 4,
-        children: [
-          ColoredBox(
-            color: currentTask.category.color,
-            child: SizedBox(width: 4, height: 24),
+    return Builder(
+      builder: (context) {
+        return ListTile(
+          onTap: () {},
+          tileColor: currentTask.isDone
+              ? Theme.of(context).colorScheme.surfaceContainer
+              : Theme.of(context).colorScheme.surface,
+          title: Text(
+            currentTask.title,
+            style: currentTask.isDone
+                ? TextStyle(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    decoration: TextDecoration.lineThrough,
+                  )
+                : null,
           ),
+          leading: Row(
+            mainAxisSize: MainAxisSize.min,
+            spacing: 4,
+            children: [
+              ColoredBox(
+                color: currentTask.category.color,
+                child: SizedBox(width: 4, height: 24),
+              ),
 
-          IconButton(
-            onPressed: () {
-              setState(() {
-                currentTask = currentTask.copyWith(isDone: !currentTask.isDone);
-              });
-            },
-            icon: currentTask.isDone
-                ? Icon(Icons.check_circle, color: Colors.green)
-                : Icon(Icons.circle_outlined, color: Colors.grey),
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    currentTask = currentTask.copyWith(
+                      isDone: !currentTask.isDone,
+                    );
+                  });
+                },
+                icon: currentTask.isDone
+                    ? Icon(Icons.check_circle, color: Colors.green)
+                    : Icon(Icons.circle_outlined, color: Colors.grey),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
