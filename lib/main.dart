@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:todo_app/models/local_category_model.dart';
 import 'package:todo_app/models/local_task_model.dart';
+import 'package:todo_app/repository/category_repo_impl.dart';
 import 'package:todo_app/widgets/category_tag.dart';
 import 'package:todo_app/widgets/task_list_item.dart';
 
@@ -37,6 +38,23 @@ class MainApp extends StatelessWidget {
                 CategoryTag(category: createRandomCategory()),
                 CategoryTag(category: createRandomCategory()),
                 CategoryTag(category: createRandomCategory()),
+
+                FilledButton(
+                  onPressed: () async {
+                    await CategoryRepoImpl().createCategory(
+                      category: createRandomCategory(),
+                    );
+                  },
+                  child: Text('add category'),
+                ),
+                FilledButton(
+                  onPressed: () async {
+                    final categories = await CategoryRepoImpl()
+                        .loadCategories();
+                    print('loaded ${categories.length} categories');
+                  },
+                  child: Text('load category'),
+                ),
               ],
             ),
           ),
