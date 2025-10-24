@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:todo_app/entities/category_entity.dart';
 
 final class LocalCategoryModel extends CategoryEntity {
@@ -17,27 +19,27 @@ final class LocalCategoryModel extends CategoryEntity {
     };
   }
 
-  @override
-  String toString() {
-    final result = '$runtimeType(\nid: $id,\nname: $name,\ncolor: $color)';
+  static LocalCategoryModel fromMap(Map<String, dynamic> map) {
+    final result = LocalCategoryModel(
+      name: map['name'],
+      color: map['color'],
+      id: map['id'],
+    );
     return result;
   }
 
   @override
-  CategoryEntity fromJson(String json) {
-    // TODO: implement fromJson
-    throw UnimplementedError();
-  }
-
-  @override
-  CategoryEntity fromMap(Map<String, dynamic> map) {
-    // TODO: implement fromMap
-    throw UnimplementedError();
-  }
-
-  @override
   String toJson() {
-    // TODO: implement toJson
-    throw UnimplementedError();
+    return jsonEncode(toMap());
+  }
+
+  static LocalCategoryModel fromJson(String json) {
+    return fromMap(jsonDecode(json));
+  }
+
+  @override
+  String toString() {
+    final result = '$runtimeType(\nid: $id,\nname: $name,\ncolor: $color)';
+    return result;
   }
 }
