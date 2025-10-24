@@ -16,7 +16,6 @@ final class LocalCategoryModel extends CategoryEntity {
   @override
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'name': name,
       'color': {
         'a': (color.a * 256).floor(),
@@ -24,6 +23,7 @@ final class LocalCategoryModel extends CategoryEntity {
         'g': (color.g * 256).floor(),
         'b': (color.b * 256).floor(),
       },
+      'id': id,
     };
   }
 
