@@ -14,36 +14,28 @@ final class LocalCategoryModel extends CategoryEntity {
   });
 
   @override
-  Map<String, dynamic> toMap() {
-    return {
-      'name': name,
-      'color': {
-        'a': (color.a * 256).floor(),
-        'r': (color.r * 256).floor(),
-        'g': (color.g * 256).floor(),
-        'b': (color.b * 256).floor(),
-      },
-      'id': id,
-    };
-  }
+  Map<String, dynamic> toMap() => {
+    'name': name,
+    'color': {'a': color.a, 'r': color.r, 'g': color.g, 'b': color.b},
+    'id': id,
+  };
 
-  @override
-  String toJson() => jsonEncode(toMap());
-
-  /// ✅ Static factory methods instead of overrides
   static LocalCategoryModel fromMap(Map<String, dynamic> map) {
-    final colorMap = map['color'];
+    final c = map['color'];
     return LocalCategoryModel(
       id: map['id'],
       name: map['name'],
       color: Color.fromARGB(
-        (colorMap['a'] * 256).floor(),
-        (colorMap['r'] * 256).floor(),
-        (colorMap['g'] * 256).floor(),
-        (colorMap['b'] * 256).floor(),
+        (c['a'] * 256).floor(),
+        (c['r'] * 256).floor(),
+        (c['g'] * 256).floor(),
+        (c['b'] * 256).floor(),
       ),
     );
   }
+
+  @override
+  String toJson() => jsonEncode(toMap());
 
   static LocalCategoryModel fromJson(String json) => fromMap(jsonDecode(json));
 
