@@ -15,29 +15,24 @@ final class LocalCategoryModel extends CategoryEntity {
 
   @override
   Map<String, dynamic> toMap() => {
-    'name': name,
-    'color': {'a': color.a, 'r': color.r, 'g': color.g, 'b': color.b},
     'id': id,
+    'name': name,
+    'color': color.toARGB32(),
   };
 
   static LocalCategoryModel fromMap(Map<String, dynamic> map) {
-    final c = map['color'];
     return LocalCategoryModel(
-      id: map['id'],
-      name: map['name'],
-      color: Color.fromARGB(
-        (c['a'] * 256).floor(),
-        (c['r'] * 256).floor(),
-        (c['g'] * 256).floor(),
-        (c['b'] * 256).floor(),
-      ),
+      id: map['id'] as String,
+      name: map['name'] as String,
+      color: Color(map['color'] as int), // reconstruct directly
     );
   }
 
   @override
   String toJson() => jsonEncode(toMap());
 
-  static LocalCategoryModel fromJson(String json) => fromMap(jsonDecode(json));
+  static LocalCategoryModel fromJson(String json) =>
+      fromMap(jsonDecode(json) as Map<String, dynamic>);
 
   @override
   String toString() => '$runtimeType(\nid: $id,\nname: $name,\ncolor: $color)';
