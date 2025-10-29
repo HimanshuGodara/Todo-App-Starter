@@ -29,7 +29,7 @@ void main() {
 
       expect(map['id'], equals(model.id));
       expect(map['name'], equals(model.name));
-      expect(map['color'], equals(model.color.value));
+      expect(map['color'], equals(model.color.toARGB32()));
     });
 
     test('fromMap() correctly reconstructs model', () {
@@ -40,7 +40,7 @@ void main() {
 
       expect(fromMap.id, equals(model.id));
       expect(fromMap.name, equals(model.name));
-      expect(fromMap.color.value, equals(model.color.value));
+      expect(fromMap.color, equals(model.color));
     });
 
     test('toJson() correctly encodes model', () {
@@ -50,7 +50,7 @@ void main() {
       final decoded = jsonDecode(jsonString);
       expect(decoded['id'], equals(model.id));
       expect(decoded['name'], equals(model.name));
-      expect(decoded['color'], equals(model.color.value));
+      expect(decoded['color'], equals(model.color.toARGB32()));
     });
 
     test('fromJson() correctly decodes model', () {
@@ -60,7 +60,7 @@ void main() {
       final fromJson = LocalCategoryModel.fromJson(jsonString);
       expect(fromJson.id, equals(model.id));
       expect(fromJson.name, equals(model.name));
-      expect(fromJson.color.value, equals(model.color.value));
+      expect(fromJson.color, equals(model.color));
     });
 
     test('Round-trip: model → json → model maintains integrity', () {
@@ -70,7 +70,7 @@ void main() {
 
       expect(roundTrip.id, equals(model.id));
       expect(roundTrip.name, equals(model.name));
-      expect(roundTrip.color.value, equals(model.color.value));
+      expect(roundTrip.color, equals(model.color));
     });
 
     test('toString() includes id, name, and color', () {
