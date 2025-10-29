@@ -36,4 +36,16 @@ final class LocalCategoryModel extends CategoryEntity {
 
   @override
   String toString() => '$runtimeType(\nid: $id,\nname: $name,\ncolor: $color)';
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is LocalCategoryModel &&
+        other.id == id &&
+        other.name == name &&
+        other.color.toARGB32() == color.toARGB32();
+  }
+
+  @override
+  int get hashCode => Object.hashAll([id, name, color]);
 }
